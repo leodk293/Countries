@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vite + React Country App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="global-container">
+        <div class="header">
+            <h1>Where in the world ?</h1>
+            <img src="globe-solid.svg" alt="">
+        </div>
+
+        <div class="app-container">
+            <div class="form">
+                <form action="">
+                    <input type="text" placeholder='Search for a country 🔍' id="searchInput" />
+                </form>
+                <select name="" id="regionSelect">
+                    <option value="">Filter by Region</option>
+                    <option value="Africa">Africa</option>
+                    <option value="Americas">Americas</option>
+                    <option value="Europe">Europe</option>
+                    <option value="Asia">Asia</option>
+                    <option value="Oceania">Oceania</option>
+                </select>
+            </div>
+
+            <div class="country-container" id="countryContainer">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const regionSelect = document.getElementById('regionSelect');
+            const countryContainer = document.getElementById('countryContainer');
+
+            let data = {
+                error: true,
+                data: []
+            };
+
+            let selectedRegion = "";
+            let searchQuery = "";
+
+            async function fetchData() {
+                try {
+                    const url = selectedRegion
+                        ? `https://restcountries.com/v3.1/region/${selectedRegion.toLowerCase()}`
+                        : 'https://restcountries.com/v3.1/all';
+
+                    const response = await fetch(url);
+
+                    if (!response.ok) {
+                        throw new Error("An error occurred");
+                    }
+
+                    const result = await response.json();
+                    console.log(result)
+
+                    data = {
+                        error: false,
+                        data: result
+                    };
+
+                    renderCountries();
+                } catch (error) {
+                    console.log(error.message);
+                    data = {
+                        error: true,
+                        data: []
+                    };
+                    renderCountries();
+                }
+            }
+
+            function renderCountries() {
+                let filteredData = data.data.filter((country) => {
+                    return country.name.common.toLowerCase().includes(searchQuery.toLowerCase());
+                });
+
+                let html = "";
+
+                filteredData.forEach((element, index) => {
+                    html += `
+                        <div class="pattern">
+                            <img src="${element.flags.png}" alt="">
+                            <div class="country-data">
+                                <h3>${element.name.common}</h3>
+                                <div class="details">
+                                    <p>Population: <span style="color: #e0e0e0">${element.population}</span></p>
+                                    <p>Region : <span style="color: #e0e0e0">${element.region}</span></p>
+                                    <p>Capital : <span style="color: #e0e0e0">${element.capital}</span></p>
+                                    <a target='_blank' href="${element.maps.googleMaps}">SEE ON THE MAP</a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                countryContainer.innerHTML = html;
+            }
+
+            function handleRegionChange() {
+                selectedRegion = regionSelect.value;
+                fetchData();
+            }
+
+            function handleSearch() {
+                searchQuery = searchInput.value;
+                renderCountries();
+            }
+
+            regionSelect.addEventListener('change', handleRegionChange);
+            searchInput.addEventListener('input', handleSearch);
+
+            fetchData();
+        });
+    </script>
+</body>
+</html>

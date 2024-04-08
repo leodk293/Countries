@@ -1,0 +1,149 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(34 46 55);
+}
+
+.global-container {
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif;
+    color: #fff;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 50px;
+    background-color: rgb(42 55 67);
+}
+
+.header img {
+    width: 50px;
+    object-fit: cover;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 50px;
+}
+
+form input {
+    outline: none;
+    border: none;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 5px;
+    background-color: rgb(42 55 67);
+    color: #fff;
+}
+
+form input::placeholder {
+    color: #fff;
+}
+
+select,
+select option {
+    outline: none;
+    border: none;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 5px;
+    background-color: rgb(42 55 67);
+    color: #fff;
+    cursor: pointer;
+}
+
+.country-container {
+    align-self: center;
+    display: grid;
+    grid-template-columns: repeat(3, 350px);
+    gap: 20px;
+    padding-bottom: 30px;
+
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 5px;
+}
+
+.pattern {
+    display: flex;
+    flex-direction: column;
+}
+
+.country-data {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+    border: 1px solid rgb(42 55 67);
+    background-color: rgb(42 55 67);
+    border-radius: 0 0 10px 10px;
+}
+
+.country-data h3 {
+    font-weight: bold;
+    background-image: linear-gradient(to right, #ffcc00, #ff3300);
+    -webkit-background-clip: text;
+    color: transparent;
+
+}
+
+.details a {
+    border: 1px solid #f1f1f1;
+    background-color: #f1f1f1;
+    color: #111;
+    border-radius: 5px;
+    text-decoration: none;
+    width: 180px;
+    padding: 5px;
+    text-align: center;
+    align-self: center;
+    font-weight: bolder;
+    transition: background-color 300ms ease-in-out;
+}
+
+.details a:hover {
+    background-color: #817d7d;
+    border: none;
+}
+
+.pattern img {
+    height: 200px;
+    object-fit: cover;
+}
+
+@media screen and (max-width:900px) {
+    .country-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .header,
+    .form {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+}
